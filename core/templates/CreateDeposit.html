@@ -1,0 +1,78 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Form Elements {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <div class="row">
+            <!-- [ form-element ] start -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Case Deposit</h5>
+                    </div>
+                    <div class="card-body">
+                        <form class="" action="" method="post">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 style="text-decoration:underline">REGISTRAR GENERAL</h5>
+                                    <div style="text-align:right">Dated: <input type="date" name="entry_date"></div>
+                                    <br />
+                                    <div class="form-group">
+                                        <p style="text-decoration:underline; text-underline-offset:10px;">
+                                            Ref: Order dated &nbsp;&nbsp;&nbsp;<input type="date" name="order_date">&nbsp;&nbsp;&nbsp;passed by the Hon'ble
+                                            Court in &nbsp;&nbsp;&nbsp;<input type="text" name="misc_case_no" placeholder="Misc Case No">&nbsp;&nbsp;&nbsp;in&nbsp;&nbsp;&nbsp; <input
+                                            <input type="text" name="main_case_no" value="MAC Appeal No." placeholder="Main Case No">.
+                                        </p>
+                                        <input type="text" name="appellant">
+                                        <input type="text" name="party_name">
+                                        <input type="text" name="amount">
+                                        <input type="text" name="in_words">
+                                        <input type="text" name="cheque_no">
+                                        <input type="text" name="cheque_date">
+                                        <input type="text" name="bank_name">
+                                        <p>
+
+
+                                        </p>
+                                        <label for="">File No</label>
+                                        <input type="text" name="file_no" class="form-control" required="required" id=""
+                                               aria-describedby="FileHelp" placeholder="Eg: 100/2020">
+                                        <small id="FileHelp" class="form-text text-muted">
+                                            Enter File No. and Year
+                                            separated by '/'
+                                        </small>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Input group -->
+
+        </div>
+        <!-- [ form-element ] end -->
+    </div>
+    <!-- [ Main Content ] end -->
+
+    </div>
+</section>
+<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
