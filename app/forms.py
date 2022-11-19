@@ -10,4 +10,9 @@ class DepositForm(ModelForm):
         fields = '__all__'
 
 
+class StatutoryDepositForm(ModelForm):
+    class Meta:
+        model = StatutoryDeposit
+        fields = '__all__'
+
 

@@ -10,6 +10,8 @@ from . import views
 urlpatterns = [
     path('', views.index, name='home'),
     path('CreateDeposit/', views.create_deposit, name="create_deposit"),
+    path('CreateStatutoryDeposit/', views.create_statutory_deposit, name="create_statutory_deposit"),
+    path('PrintDeposit/<int:pk>/', views.print_deposit, name="print_deposit"),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 ]

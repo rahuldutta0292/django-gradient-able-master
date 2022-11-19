@@ -6,7 +6,91 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+<script type="text/javascript">
+    function convertNumberToWords(amount) {
+        var words = new Array();
+        words[0] = '';
+        words[1] = 'One';
+        words[2] = 'Two';
+        words[3] = 'Three';
+        words[4] = 'Four';
+        words[5] = 'Five';
+        words[6] = 'Six';
+        words[7] = 'Seven';
+        words[8] = 'Eight';
+        words[9] = 'Nine';
+        words[10] = 'Ten';
+        words[11] = 'Eleven';
+        words[12] = 'Twelve';
+        words[13] = 'Thirteen';
+        words[14] = 'Fourteen';
+        words[15] = 'Fifteen';
+        words[16] = 'Sixteen';
+        words[17] = 'Seventeen';
+        words[18] = 'Eighteen';
+        words[19] = 'Nineteen';
+        words[20] = 'Twenty';
+        words[30] = 'Thirty';
+        words[40] = 'Forty';
+        words[50] = 'Fifty';
+        words[60] = 'Sixty';
+        words[70] = 'Seventy';
+        words[80] = 'Eighty';
+        words[90] = 'Ninety';
+        amount = amount.toString();
+        var atemp = amount.split(".");
+        var number = atemp[0].split(",").join("");
+        var n_length = number.length;
+        var words_string = "";
+        if (n_length <= 9) {
+            var n_array = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+            var received_n_array = new Array();
+            for (var i = 0; i < n_length; i++) {
+                received_n_array[i] = number.substr(i, 1);
+            }
+            for (var i = 9 - n_length, j = 0; i < 9; i++, j++) {
+                n_array[i] = received_n_array[j];
+            }
+            for (var i = 0, j = 1; i < 9; i++, j++) {
+                if (i == 0 || i == 2 || i == 4 || i == 7) {
+                    if (n_array[i] == 1) {
+                        n_array[j] = 10 + parseInt(n_array[j]);
+                        n_array[i] = 0;
+                    }
+                }
+            }
+            value = "";
+            for (var i = 0; i < 9; i++) {
+                if (i == 0 || i == 2 || i == 4 || i == 7) {
+                    value = n_array[i] * 10;
+                } else {
+                    value = n_array[i];
+                }
+                if (value != 0) {
+                    words_string += words[value] + " ";
+                }
+                if ((i == 1 && value != 0) || (i == 0 && value != 0 && n_array[i + 1] == 0)) {
+                    words_string += "Crores ";
+                }
+                if ((i == 3 && value != 0) || (i == 2 && value != 0 && n_array[i + 1] == 0)) {
+                    words_string += "Lakhs ";
+                }
+                if ((i == 5 && value != 0) || (i == 4 && value != 0 && n_array[i + 1] == 0)) {
+                    words_string += "Thousand ";
+                }
+                if (i == 6 && value != 0 && (n_array[i + 1] != 0 && n_array[i + 2] != 0)) {
+                    words_string += "Hundred and ";
+                } else if (i == 6 && value != 0) {
+                    words_string += "Hundred ";
+                }
+            }
+            words_string = words_string.split("  ").join(" ");
+        }
+        var depword = document.getElementById("depword");
+        depword.value = words_string;
+    }
 
+</script>
 <!-- [ Main Content ] start -->
 <section class="pcoded-main-container">
     <div class="pcoded-content">
@@ -14,50 +98,101 @@
             <!-- [ form-element ] start -->
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>Case Deposit</h5>
-                    </div>
                     <div class="card-body">
-                        <form class="" action="" method="post">
-                            {% csrf_token %}
+                        <fieldset>
+                            <legend class="alert alert-success" style="text-align: center;">
+                                Deposit Order<br>
+                                {% if display != "" %}
+                                    <a class=""
+                                       style="text-align:center ;font-family: century gothic;font-size: 18px;color: black;"> {{ saved_deposit.main_case_no }} {{ display }}</a><br>
+                                    <a href="" class=""
+                                       style="text-align:center ;font-family: century gothic;font-size: 12px;color: black;">Print</a>
+                                {% endif %}
+                            </legend>
+                            <form class="form-inline" action="" method="post">
+                                {% csrf_token %}
+                                <div style="padding-left: 10px;padding-right: 20px;">
+                                    <ul>
+                                        <li style="font-family: Century Gothic;font-size: 14px;color: red;text-align: left;">
+                                            Leave the Miscellaneous Case No. field <strong>BLANK</strong> if the Case
+                                            does not contain any I.A No.
+                                        </li>
+                                    </ul>
+                                    <p align="right">Dated: <input name="entry_date" class="form-control" type="date"
+                                                                   value="{% now 'Y-m-d' %}"></p>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h5 style="text-decoration:underline">REGISTRAR GENERAL</h5>
-                                    <div style="text-align:right">Dated: <input type="date" name="entry_date"></div>
-                                    <br />
-                                    <div class="form-group">
-                                        <p style="text-decoration:underline; text-underline-offset:10px;">
-                                            Ref: Order dated &nbsp;&nbsp;&nbsp;<input type="date" name="order_date">&nbsp;&nbsp;&nbsp;passed by the Hon'ble
-                                            Court in &nbsp;&nbsp;&nbsp;<input type="text" name="misc_case_no" placeholder="Misc Case No">&nbsp;&nbsp;&nbsp;in&nbsp;&nbsp;&nbsp; <input
-                                            <input type="text" name="main_case_no" value="MAC Appeal No." placeholder="Main Case No">.
-                                        </p>
-                                        <input type="text" name="appellant">
-                                        <input type="text" name="party_name">
-                                        <input type="text" name="amount">
-                                        <input type="text" name="in_words">
-                                        <input type="text" name="cheque_no">
-                                        <input type="text" name="cheque_date">
-                                        <input type="text" name="bank_name">
-                                        <p>
+                                    <h4 style="font-family: Tahoma;text-decoration: underline;text-align: left;">
+                                        REGISTRAR GENERAL</h4>
 
-
-                                        </p>
-                                        <label for="">File No</label>
-                                        <input type="text" name="file_no" class="form-control" required="required" id=""
-                                               aria-describedby="FileHelp" placeholder="Eg: 100/2020">
-                                        <small id="FileHelp" class="form-text text-muted">
-                                            Enter File No. and Year
-                                            separated by '/'
-                                        </small>
-
-
-                                    </div>
+                                    <p style="text-align:justify;line-height:50px;">
+                                        Ref: Order dated <input required="required" placeholder="Order Date"
+                                                                autocomplete="off" class="form-control"
+                                                                name="order_date" class="form-control" type="text">
+                                        passed by the Hon'ble Court in <input autocomplete="off" value=""
+                                                                              placeholder="Miscellaneous Case No (if any)"
+                                                                              style="width: 300px;" class="form-control"
+                                                                              name="misc_case_no" type="text"> in
+                                        <input required="required" autocomplete="off" placeholder="Main Case No"
+                                               style="width: 250px;" class="form-control" value="MAC Appeal No."
+                                               name="main_case_no" type="text">.
+                                    </p>
+                                    <p style="text-align: justify;line-height: 50px;">
+                                        As per Order of the Hon'ble Court referred to above, the <input
+                                            required="required" list="appl" autocomplete="on"
+                                            placeholder="Appellant/Respondent" class="form-control" name="appellant"
+                                            type="text" style="width: 200px;">
+                                        <datalist id="appl">
+                                            <option value="Appellant">
+                                            <option value="Respondent No. 1">
+                                        </datalist>
+                                        viz. <input required="required" list="inscos" id="ins" autocomplete="on"
+                                                    placeholder="Name of Insurance Company" class="form-control"
+                                                    name="party_name" type="text" style="width: 500px;">
+                                        <datalist id="inscos">
+                                            <option value="The Oriental Insurance Co. Ltd.">
+                                            <option value="The National Insurance Co. Ltd.">
+                                            <option value="The United India Insurance Co. Ltd.">
+                                            <option value="The New India Assurance Co. Ltd.">
+                                            <option value="Shriram General Insurance Co. Ltd.">
+                                            <option value="SBI General Insurance Co. Ltd.">
+                                            <option value="HDFC Ergo General Insurance Co. Ltd.">
+                                            <option value="Cholamandalam M/S General Insurance Co. Ltd.">
+                                            <option value="Tata AIG General Insurance Co. Ltd.">
+                                        </datalist>
+                                        has deposited an amount of <input required="required" class="form-control"
+                                                                          id="deposit"
+                                                                          onkeyup="convertNumberToWords(this.value);"
+                                                                          type="text" name="amount" placeholder="Amount">
+                                        (<input class="form-control" placeholder="amount in words" type="text"
+                                                style="width: 400px;" id="depword" name="in_words"> only)
+                                        vide Cheque/DD No. <input required="required" class="form-control" type="number"
+                                                                  name="cheque_no" placeholder="Cheque/DD No">
+                                        dated <input required="required" class="form-control" type="text" name="cheque_date"
+                                                     placeholder="Cheque/DD Date"> (<input list="banklist"
+                                                                                           required="required" id="bank"
+                                                                                           class="form-control"
+                                                                                           type="text" name="bank_name"
+                                                                                           placeholder="Bank">).
+                                        Accordingly, the aforesaid Cheque/DD may perhaps be deposited in the account of
+                                        the "Registrar General, Gauhati High Court, Guwahati".
+                                        <datalist id="banklist">
+                                            <option value="ICICI Bank, Fancy Bazar branch, Guwahati">
+                                            <option value="HDFC Bank, Guwahati">
+                                            <option value="AXIS Bank, Guwahati">
+                                            <option value="UCO Bank, Rajgarh Road, Guwahati">
+                                            <option value="SBI, Mumbai Main branch">
+                                            <option value="HDFC Bank, Pune">
+                                            <option value="HDFC Bank, Mumbai">
+                                            <option value="HDFC Bank, Chennai">
+                                            <option value="AXIS Bank, Jaipur">
+                                            <option value="HSBC Bank, Mumbai">
+                                        </datalist>
+                                        <input type="number" name="employee" value="1">
+                                    </p>
                                 </div>
-
-                            </div>
-                        </form>
-
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </form>
+                        </fieldset>
                     </div>
                 </div>
             </div>
@@ -67,11 +202,9 @@
         <!-- [ form-element ] end -->
     </div>
     <!-- [ Main Content ] end -->
-
     </div>
 </section>
 <!-- [ Main Content ] end -->
-
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->

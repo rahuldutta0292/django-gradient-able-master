@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        Django Gradient Able - {% block title %}{% endblock %} | AppSeed
+    </title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="canonical" href="https://appseed.us/admin-dashboards/django-dashboard-gradientable">
+
+    <meta name="description" content=""/>
+    <meta name="keywords" content="">
+    <meta name="author" content="Codedthemes"/>
+    <!-- Favicon icon -->
+    <link rel="icon" href="/static/assets/images/favicon.ico" type="image/x-icon">
+
+    <!-- vendor css -->
+
+
+    <!-- Specific CSS goes HERE -->
+    {% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+          crossorigin="anonymous">
+    <style type="text/css">
+	@media print{
+				#noview{
+						display: none;
+						}
+				}
+
+
+
+
+
+
+    </style>
+    {% endblock stylesheets %}
+    {% include 'includes/scripts.html' %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block content %}
+<body onload="window.print()" class="hold-transition skin-blue sidebar-mini" style="width: 8.27 in; height: 11.69 in;">
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+
+        <div class="row">
+            <!-- [ form-element ] start -->
+            <div class="col-sm-12">
+                <button id="noview" class="btn print" onclick="window.print()"><i class="fa fa-print"></i>Print
+                </button>
+                <div class="row" align="center"
+                     style="font-family: Tahoma;width: 100%;padding-left: 4cm;padding-bottom: 0cm;padding-top: 3cm;padding-right: 1cm;margin-top: 0px;margin-left: 0px;">
+                    <fieldset>
+
+                        <h6 align="right" style="text-decoration:underline">Dated: {{ deposit.entry_date|date:'jS F Y' }}.
+
+                        </h6>
+                        <h4 align="left"
+                            style="font-family: Tahoma;font-weight:bold;text-decoration:underline;line-height: 30px;">
+                            REGISTRAR GENERAL</h4>
+
+                        <h4 style="text-decoration: underline;text-align: left; font-family: Tahoma;font-size: 15px;line-height: 30px;">
+                            Ref: Order dated {{ deposit.order_date }}
+                            passed by the Honb'le Court
+                            {% if deposit.misc_case_no %}
+                            in {{ deposit.misc_case_no }}
+                            {% endif %}
+                            in {{ deposit.main_case_no }}.
+
+                        </h4>
+                        <p style="text-align: justify;font-family: Tahoma; font-size: 15px;line-height: 30px;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As per Order of the Hon'ble Court referred
+                            to above,<strong><i> the {{ deposit.appellant }}
+
+                            viz. {{ deposit.party_name }}
+                        </i></strong>has deposited an amount of
+                            <strong><i>&#8377;{{ deposit.amount }}/- ({{ deposit.in_words }}
+
+                                only)</i></strong>
+                            vide Cheque/DD No.<strong><i>{{ deposit.cheque_no }}</i></strong>
+
+                            dated <strong><i>{{ deposit.cheque_date }}
+
+                            (
+                            {{ deposit.bank_name }}
+                            )</i></strong>.
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Accordingly, the aforesaid Cheque/D.D may
+                            perhaps be deposited in the account of the <strong><i>"Registrar General, Gauhati High
+                            Court, Guwahati"</i></strong>.
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Laid.
+                            <br><br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a style="font-family:'Monotype Corsiva'; text-decoration:underline">
+                            {{ deposit.employee.name }}</a>
+                        </p>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<!-- [ Main Content ] end -->
+{% endblock content %}
