@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.http import HttpResponse
 from django import template
-from .models import Deposit
+from .models import Deposit, Employee
 from .models import StatutoryDeposit
 from .forms import DepositForm
 from .forms import StatutoryDepositForm
@@ -16,9 +16,12 @@ from .forms import StatutoryDepositForm
 # Create your views here.
 
 
+@login_required(login_url="/login/")
 def create_deposit(request):
     form = DepositForm
     display = ""
+    current_user = request.user
+    current_employee = Employee.objects.get(user=current_user)
     saved_deposit = {}
     if request.method == 'POST':
         form = DepositForm(request.POST)
@@ -31,7 +34,7 @@ def create_deposit(request):
             display = "Deposit Entry Not Successful"
             print(form.errors)
             # redirect('home') //redirect to any page you wish to send the user after registration
-    context = {'form': form, 'display': display, 'saved_deposit': saved_deposit}
+    context = {'form': form, 'display': display, 'saved_deposit': saved_deposit, "current_employee": current_employee}
     return render(request, 'CreateDeposit.html', context)
 
 

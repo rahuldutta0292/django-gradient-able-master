@@ -10,11 +10,11 @@ from django.contrib.auth.models import User
 
 
 class Employee(models.Model):
-    name = models.CharField(max_length=200, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     designation = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.user.first_name + " " + self.user.last_name
 
 
 class Deposit(models.Model):
